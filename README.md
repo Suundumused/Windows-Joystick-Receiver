@@ -31,7 +31,7 @@ Check out our video showcase:
 
 ## Getting Started
 
-Follow these simple steps to get started with BeautifulUI:
+Follow these simple solution steps (option):
 
 1. Firewall(if you have problems):
 
