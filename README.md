@@ -2,7 +2,7 @@
 
 ![BeautifulUI Logo](https://drive.google.com/uc?export=download&id=1QoIUpMFY0hq_7lWUBdmaJ-TmWokfj9y9)
 
-BeautifulUI is a powerful and customizable UI library designed to enhance the visual appeal and user experience of your applications. With a collection of meticulously crafted components, stunning themes, and comprehensive documentation, BeautifulUI empowers developers to effortlessly create stunning user interfaces.
+This joystick app is based on the Xbox 360 controller, it transforms the accelerometer (gravity sensor) of the mobile into the left analog stick (for the gaming steering wheel), it also includes all the other buttons, the left and right trigger have been transformed into a single one slider (easier to hold the mobile while accelerating or braking). On Windows you will download the Server Receiver from this repository, and the joystick app from Google Play.
 
 ## Features
 
