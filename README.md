@@ -23,10 +23,10 @@ BeautifulUI is a powerful and customizable UI library designed to enhance the vi
 
 ## Video Showcase
 
-Check out our video showcase to see BeautifulUI in action:
+Check out our video showcase:
 
-[![BeautifulUI Showcase Video](https://example.com/images/video_thumbnail.png)](https://www.youtube.com/watch?v=your_video_id)
-*Click to watch the BeautifulUI showcase video.*
+[![Video](https://example.com/images/video_thumbnail.png)](https://www.youtube.com/watch?v=your_video_id)
+*Click showcase .*
 
 ## Getting Started
 
