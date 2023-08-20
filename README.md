@@ -1,6 +1,6 @@
 # Windows Gravity Joystick Receiver
 
-![BeautifulUI Logo](https://drive.google.com/uc?export=download&id=1cbYncJ8iKk0VeEiuJpLFxZQlM1WuNKRX)
+![BeautifulUI Logo](https://drive.google.com/uc?export=download&id=1QoIUpMFY0hq_7lWUBdmaJ-TmWokfj9y9)
 
 BeautifulUI is a powerful and customizable UI library designed to enhance the visual appeal and user experience of your applications. With a collection of meticulously crafted components, stunning themes, and comprehensive documentation, BeautifulUI empowers developers to effortlessly create stunning user interfaces.
 
