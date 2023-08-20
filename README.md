@@ -27,7 +27,7 @@ This joystick app is based on the Xbox 360 controller, it transforms the acceler
 The mobile being connected to the 5G network is highly recommended.:
 
 - **Desktop and mobile must be on the same network.**
-- **Enter the IP that is appearing in the terminal on the mobile.**
+- **Enter the IP that is appearing in the Windows terminal on the mobile.**
 - **You can change the server's IP and port by editing and opening the .bat file inside the program's folder.**
 
 ## Getting Started
