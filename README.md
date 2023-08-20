@@ -32,7 +32,7 @@ The mobile being connected to the 5G network is highly recommended.:
 
 ## Setup
 
-- **Download and install third-party driver that will create "fake" xbox 360 joystick hardware**
+- **Download and install third-party driver that will create "fake" xbox 360 joystick hardware** [DRIVER](https://github.com/Suundumused/Windows-Joystick-Receiver/tree/main/ServerGravityJoystick/Driver)
 - **Download and run Receiver Joystick in this repository**
 - **Connect on mobile through the Gravity Joystick app.**
 
