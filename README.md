@@ -1,1 +1,1 @@
-# Windows-Gravity-Joystick-Receiver
+# Windows Gravity Joystick Receiver
