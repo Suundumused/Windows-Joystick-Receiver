@@ -22,12 +22,13 @@ This joystick app is based on the Xbox 360 controller, it transforms the acceler
 
 *BeautifulUI components in action.*
 
-## Video Showcase
+## Sensibility
 
-Check out our video showcase:
+The mobile being connected to the 5G network is highly recommended.:
 
-[![Video](https://example.com/images/video_thumbnail.png)](https://www.youtube.com/watch?v=your_video_id)
-*Click showcase .*
+- **Desktop and mobile must be on the same network.**
+- **Enter the IP that is appearing in the terminal on the mobile.**
+- **You can change the server's IP and port by editing and opening the .bat file inside the program's folder.**
 
 ## Getting Started
 
