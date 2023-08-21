@@ -295,7 +295,7 @@ if __name__ == "__main__":
         # Executando como  script .py
         path = os.path.dirname(os.path.abspath(sys.argv[0]))
             
-    icon_path = os.path.join(path, config_name+"/icon.ico")
+    icon_path = os.path.join(path, config_name+"/icon2.ico")
     icon_image = Image.open(icon_path)
     
     Variaveis = Variables()
