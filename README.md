@@ -46,17 +46,27 @@ Follow these simple solution steps (option):
 
 ![Screenshot 3](https://drive.google.com/uc?export=download&id=1PxNbTq7ZDhWFkyhB328Sl59hJrg42-fW)
 
-   Select the Start menu, type Allow an app through Windows Firewall, and select it from the list of results. Select Change settings. You might be asked for an administrator password or to       
-   confirm your choice. To add an app, select the check box next to the app, or select Allow another app and enter the path for the app.
+   Select the Start menu, type Allow an app through Windows Firewall, and select it from the list of results. Select Change settings. 
+   You might be asked for an administrator password or to confirm your choice. To add an app, select the check box next to the app, 
+   or select Allow another app and enter the path for the app.
 
 --
 
 2. Unable to connect(Tips):
 
-   Incorrect and corret structure if using routers together with modem.
+   Incorrect and corret structure IF using routers together with modem.
 
-![Screenshot 3](https://drive.google.com/uc?export=download&id=1PxNbTq7ZDhWFkyhB328Sl59hJrg42-fW)
+![Screenshot 4](https://drive.google.com/uc?export=download&id=1d-8nwoCNWNvgh6z8658iMQBgjaWRS_Fz)
 
-   Select the Start menu, type Allow an app through Windows Firewall, and select it from the list of results. Select Change settings. You might be asked for an administrator password or to       
-   confirm your choice. To add an app, select the check box next to the app, or select Allow another app and enter the path for the app.
+3. Changing to the correct Listen IP and Port
+   
+   Open start menu search and open CMD, type ipconfig . Look for the IPV4 address corresponding to the computer connection with the modem/router,
+   (Ethernet if via cable and WI-FI if wireless), copy the IPV4 address.
+
+   With notepad, create a file named run.bat in the folder: C:\Program Files (x86)\Gravity Joystick Receiver (default)
+   write this command substituting the IP and port if you need it. Save with type: "All" and open it.
+
+   @echo off
+   start "" "%~dp0GJWirelessReceiver.exe" --host 127.0.0.1 --port 3470
+   
 
