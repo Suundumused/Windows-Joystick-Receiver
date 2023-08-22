@@ -7,6 +7,7 @@ This joystick app is based on the Xbox 360 controller, it transforms the acceler
 Some games have the option "steering axis dead zone" like Euro Truck Simulator 2, I recommend disabling it to control 100% of the steering, high sensitivity is recommended.
 
 ## [DOWNLOAD Windows Receiver](https://github.com/Suundumused/Windows-Joystick-Receiver/releases/tag/JoystickReceiverSetup)
+## **Download and install third-party driver** [DRIVER](https://github.com/Suundumused/Windows-Joystick-Receiver/tree/main/ServerGravityJoystick/Driver)
 
 ## Features
 
