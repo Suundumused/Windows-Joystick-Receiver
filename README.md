@@ -67,6 +67,7 @@ Follow these simple solution steps (option):
    write this command substituting the IP and port if you need it. Save with type: "All" and open it.
 
    @echo off
+   
    start "" "%~dp0GJWirelessReceiver.exe" --host 127.0.0.1 --port 3470
    
 
