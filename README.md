@@ -49,3 +49,14 @@ Follow these simple solution steps (option):
    Select the Start menu, type Allow an app through Windows Firewall, and select it from the list of results. Select Change settings. You might be asked for an administrator password or to       
    confirm your choice. To add an app, select the check box next to the app, or select Allow another app and enter the path for the app.
 
+--
+
+2. Unable to connect(Tips):
+
+   Incorrect and corret structure if using routers together with modem.
+
+![Screenshot 3](https://drive.google.com/uc?export=download&id=1PxNbTq7ZDhWFkyhB328Sl59hJrg42-fW)
+
+   Select the Start menu, type Allow an app through Windows Firewall, and select it from the list of results. Select Change settings. You might be asked for an administrator password or to       
+   confirm your choice. To add an app, select the check box next to the app, or select Allow another app and enter the path for the app.
+
