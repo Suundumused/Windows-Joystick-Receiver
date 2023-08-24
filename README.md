@@ -38,13 +38,13 @@ The mobile being connected to the 5G network is highly recommended.:
 - **You can change the server's IP and port by editing and opening the .bat file inside the program's folder.**
 - **Driver is installed automatically on first run.**
 
-## Setup(Follow the steps below only if you are having problems.)
+## Setup (Follow the steps below only if you are having problems.)
 
 - **Download and install third-party driver that will create "fake" xbox 360 joystick hardware** [DRIVER](https://github.com/Suundumused/Windows-Joystick-Receiver/tree/main/ServerGravityJoystick/Driver)
 - **Download and run Receiver Joystick in this repository**
 - **Connect on mobile through the Gravity Joystick app.**
 
-## Getting Started(Follow the steps below only if you are having problems.)
+## Support (Follow the steps below only if you are having problems.)
 
 Follow these simple solution steps (option):
 
