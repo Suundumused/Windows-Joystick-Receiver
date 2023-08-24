@@ -10,39 +10,6 @@ import argparse
 import platform
 import subprocess
 
-try:
-    import vgamepad as vg
-except:
-    MB_ICONERROR = 0x10
-    MB_OK = 0x0
-        
-    bits = platform.architecture()[0]
-        
-    config_name = 'Driver'
-        
-    try:
-        if getattr(sys, 'frozen', False):  #-----ATUALIZADO-----
-            # Executando como executable (PyInstaller)
-            path = os.path.dirname(sys.executable)
-        else:
-                # Executando como  script .py
-            path = os.path.dirname(os.path.abspath(sys.argv[0]))
-            
-        if bits == '32bit':
-            installer=os.path.join(path, config_name+"/DriverX86/ViGEmBusSetup_x86.msi")
-            subprocess.run(["msiexec", "/i", installer], check=False)
-        elif bits == '64bit':
-            installer=os.path.join(path, config_name+"/DriverX64/ViGEmBusSetup_x64.msi")
-            subprocess.run(["msiexec", "/i", installer], check=False)
-        else:
-            ctypes.windll.user32.MessageBoxW(0, "Architecture information not available.", "Error", MB_ICONERROR | MB_OK)
-                
-    except Exception as e:
-        ctypes.windll.user32.MessageBoxW(0, str(e), "Error", MB_ICONERROR | MB_OK)
-
-finally:
-    import vgamepad as vg
-
 import pystray
 from PIL import Image
 
@@ -53,6 +20,8 @@ class Variables:
     def __init__(self):
         self.StartStop = True
         self.Sensibility = 2
+        self.ServerIP = ""
+        self.ServerPort = ""
         
     def install_drivers(self):
         MB_ICONERROR = 0x10
@@ -71,11 +40,11 @@ class Variables:
                 path = os.path.dirname(os.path.abspath(sys.argv[0]))
             
             if bits == '32bit':
-                installer=os.path.join(path, config_name+"/DriverX86/ViGEmBusSetup_x86.msi")
-                subprocess.run(["msiexec", "/i", installer], check=False)
+                installer=os.path.join(path, config_name+"\DriverX86\ViGEmBusSetup_x86.msi")
+                os.system('msiexec /i %s /qn' % installer)
             elif bits == '64bit':
-                installer=os.path.join(path, config_name+"/DriverX64/ViGEmBusSetup_x64.msi")
-                subprocess.run(["msiexec", "/i", installer], check=False)
+                installer=os.path.join(path, config_name+"\DriverX64\ViGEmBusSetup_x64.msi")
+                os.system('msiexec /i %s /qn' % installer)
             else:
                 ctypes.windll.user32.MessageBoxW(0, "Architecture information not available.", "Error", MB_ICONERROR | MB_OK)
                 
@@ -107,15 +76,18 @@ class Variables:
             return valor
 
 async def handle_client(client_socket, Variaveis):
-    print(f"Accepted connection from {client_socket.getpeername()}")
-    
-    MB_ICONERROR = 0x10
-    MB_OK = 0x0
-    
     try:
-        vg.VX360Gamepad()
+        import vgamepad as vg
     except:
         Variaveis.install_drivers()
+        import vgamepad as vg
+        
+    os.system('cls')
+    print(f"Listening on {Variaveis.ServerIP}:{int(Variaveis.ServerPort)}")
+    print(f"\nAccepted connection from {client_socket.getpeername()}\nConnected. Running!")
+        
+    MB_ICONERROR = 0x10
+    MB_OK = 0x0
     
     gamepad = vg.VX360Gamepad()
     
@@ -216,15 +188,16 @@ async def handle_client(client_socket, Variaveis):
                 gamepad.release_button(button=vg.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_DOWN)
             
             gamepad.update()
-            
-            #print(f"Received float: {received_list}")
-            
+                        
             response = "0"
             client_socket.send(response.encode())
 
         except Exception as e:
             ctypes.windll.user32.MessageBoxW(0, str(e), "Error", MB_ICONERROR | MB_OK)
-
+            
+    os.system('cls')
+    print(f"Listening on {Variaveis.ServerIP}:{int(Variaveis.ServerPort)}")
+    print(f"\nDisconnected. Stopped!")
     client_socket.close()
     gamepad.reset()
     #print(f"Connection closed for {client_socket.getpeername()}")
@@ -272,6 +245,10 @@ async def main(ServerAdd, Variaveis):
 
     # Listen for incoming connections
         server_socket.listen(1)
+        
+        Variaveis.ServerIP = server_ip
+        Variaveis.ServerPort = server_port
+        
         print(f"Listening on {server_ip}:{int(server_port)}")
 
         while Variaveis.StartStop:
