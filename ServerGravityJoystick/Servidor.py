@@ -41,10 +41,10 @@ class Variables:
             
             if bits == '32bit':
                 installer=os.path.join(path, config_name+"\DriverX86\ViGEmBusSetup_x86.msi")
-                os.system('msiexec /i %s /qn' % installer)
+                os.startfile(installer)
             elif bits == '64bit':
                 installer=os.path.join(path, config_name+"\DriverX64\ViGEmBusSetup_x64.msi")
-                os.system('msiexec /i %s /qn' % installer)
+                os.startfile(installer)
             else:
                 ctypes.windll.user32.MessageBoxW(0, "Architecture information not available.", "Error", MB_ICONERROR | MB_OK)
                 
@@ -76,11 +76,17 @@ class Variables:
             return valor
 
 async def handle_client(client_socket, Variaveis):
+    MB_ICONERROR = 0x10
+    MB_OK = 0x0
+
     try:
         import vgamepad as vg
     except:
         Variaveis.install_drivers()
-        import vgamepad as vg
+        try:
+            import vgamepad as vg
+        except:
+            Variaveis.sair()
         
     os.system('cls')
     print(f"Listening on {Variaveis.ServerIP}:{int(Variaveis.ServerPort)}")
@@ -193,7 +199,8 @@ async def handle_client(client_socket, Variaveis):
             client_socket.send(response.encode())
 
         except Exception as e:
-            ctypes.windll.user32.MessageBoxW(0, str(e), "Error", MB_ICONERROR | MB_OK)
+            es = repr(e)
+            ctypes.windll.user32.MessageBoxW(0, es, "Error", MB_ICONERROR | MB_OK)
             
     os.system('cls')
     print(f"Listening on {Variaveis.ServerIP}:{int(Variaveis.ServerPort)}")
