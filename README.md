@@ -25,7 +25,9 @@ Some games have the option "steering axis dead zone" like Euro Truck Simulator 2
 
 ## Screenshots
 ![Screenshot 0](https://drive.google.com/uc?export=download&id=1ZQDWzuQ7b1IOH9o6A_HmnsBreETEFDm8) 
-![Screenshot 2](https://drive.google.com/uc?export=download&id=1fiCMyXSn1H1i7wSz1TzoHgchwzrGR_kj) 
+![Screenshot 2](https://drive.google.com/uc?export=download&id=1fiCMyXSn1H1i7wSz1TzoHgchwzrGR_kj)
+
+[If the image doesn't load click here.](https://drive.google.com/file/d/1ZQDWzuQ7b1IOH9o6A_HmnsBreETEFDm8/view?pli=1)
 
 *BeautifulUI components in action.*
 
@@ -51,6 +53,7 @@ Follow these simple solution steps (option):
 1. Firewall(if you have problems):
 
 ![Screenshot 3](https://drive.google.com/uc?export=download&id=1PxNbTq7ZDhWFkyhB328Sl59hJrg42-fW)
+[If the image doesn't load click here.](https://drive.google.com/file/d/1PxNbTq7ZDhWFkyhB328Sl59hJrg42-fW/view)
 
    Select the Start menu, type Allow an app through Windows Firewall, and select it from the list of results. Select Change settings. 
    You might be asked for an administrator password or to confirm your choice. To add an app, select the check box next to the app, 
@@ -63,6 +66,7 @@ Follow these simple solution steps (option):
    Incorrect and corret structure IF using routers together with modem.
 
 ![Screenshot 4](https://drive.google.com/uc?export=download&id=1d-8nwoCNWNvgh6z8658iMQBgjaWRS_Fz)
+[If the image doesn't load click here.](https://drive.google.com/file/d/1d-8nwoCNWNvgh6z8658iMQBgjaWRS_Fz/view)
 
 3. Changing to the correct Listen IP and Port
    
