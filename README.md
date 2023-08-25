@@ -53,6 +53,7 @@ Follow these simple solution steps (option):
 1. Firewall(if you have problems):
 
 ![Screenshot 3](https://drive.google.com/uc?export=download&id=1PxNbTq7ZDhWFkyhB328Sl59hJrg42-fW)
+
 [If the image doesn't load click here.](https://drive.google.com/file/d/1PxNbTq7ZDhWFkyhB328Sl59hJrg42-fW/view)
 
    Select the Start menu, type Allow an app through Windows Firewall, and select it from the list of results. Select Change settings. 
@@ -66,6 +67,7 @@ Follow these simple solution steps (option):
    Incorrect and corret structure IF using routers together with modem.
 
 ![Screenshot 4](https://drive.google.com/uc?export=download&id=1d-8nwoCNWNvgh6z8658iMQBgjaWRS_Fz)
+
 [If the image doesn't load click here.](https://drive.google.com/file/d/1d-8nwoCNWNvgh6z8658iMQBgjaWRS_Fz/view)
 
 3. Changing to the correct Listen IP and Port
