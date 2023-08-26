@@ -201,6 +201,7 @@ async def handle_client(client_socket, Variaveis):
         except Exception as e:
             es = repr(e)
             ctypes.windll.user32.MessageBoxW(0, es, "Error", MB_ICONERROR | MB_OK)
+            break
             
     os.system('cls')
     print(f"Listening on {Variaveis.ServerIP}:{int(Variaveis.ServerPort)}")
@@ -263,7 +264,7 @@ async def main(ServerAdd, Variaveis):
             asyncio.create_task(handle_client(client_socket, Variaveis))
             
     except Exception as e:
-        ctypes.windll.user32.MessageBoxW(0, str(e), "Error", MB_ICONERROR | MB_OK)
+        ctypes.windll.user32.MessageBoxW(0, repr(e), "Error", MB_ICONERROR | MB_OK)
 
 
 if __name__ == "__main__":
