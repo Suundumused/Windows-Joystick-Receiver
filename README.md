@@ -11,7 +11,7 @@ Some games have the option "steering axis dead zone" like Euro Truck Simulator 2
 ![Screenshot 202](https://drive.google.com/uc?export=download&id=1G3n0m3ub7sO8SBy1iNS-u0OHdzgUQGzI)
 
 ## [DOWNLOAD Windows Receiver](https://github.com/Suundumused/Windows-Joystick-Receiver/releases/tag/GravityJoystickReceiverSetup)
-## **Download and install third-party driver** [DRIVER](https://github.com/Suundumused/Windows-Joystick-Receiver/tree/main/ServerGravityJoystick/Driver)
+## **Download and install third-party** [DRIVER](https://github.com/Suundumused/Windows-Joystick-Receiver/tree/main/ServerGravityJoystick/Driver)
 
 **The license files in this document refer only to the Receiver for Windows and the Drivers. Does not apply to the mobile client.**
 
@@ -28,10 +28,8 @@ Some games have the option "steering axis dead zone" like Euro Truck Simulator 2
 - **Types of games:** Designed for car and plane games.
 
 ## Screenshots
-![Screenshot 0](https://drive.google.com/uc?export=download&id=1ZQDWzuQ7b1IOH9o6A_HmnsBreETEFDm8) 
-![Screenshot 2](https://drive.google.com/uc?export=download&id=1fiCMyXSn1H1i7wSz1TzoHgchwzrGR_kj)
-
-[If the image doesn't load click here.](https://drive.google.com/file/d/1ZQDWzuQ7b1IOH9o6A_HmnsBreETEFDm8/view?pli=1)
+![Screenshot 0](https://drive.google.com/uc?export=download&id=1vYzMl3p9iAb3-MOqpN-G3vJiUjCo19pg) 
+![Screenshot 2](https://drive.google.com/uc?export=download&id=1TuFN7iwC7x8tgvuvPVcPmkaDXkI5KJWB)
 
 *BeautifulUI components in action.*
 
