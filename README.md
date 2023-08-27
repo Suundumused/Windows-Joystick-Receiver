@@ -4,12 +4,14 @@
 
 This joystick app is based on the Xbox 360 controller, it transforms the accelerometer (gravity sensor) of the mobile into the left analog stick (for the gaming steering wheel), it also includes all the other buttons, the left and right trigger have been transformed into a single one slider (easier to hold the mobile while accelerating or braking). On Windows you will download the Server Receiver from this repository, and the joystick app from Google Play.
 
-Some games have the option "steering axis dead zone" like Euro Truck Simulator 2, I recommend disabling it to control 100% of the steering, high sensitivity is recommended.
+Some games have the option "steering axis dead zone" like Euro Truck Simulator 2, I recommend greatly reduce it to control 100% of the steering, high sensitivity is recommended.
 
-**The license files in this document refer only to the Receiver for Windows and the Drivers. Does not apply to the mobile client.**
+![Screenshot 200](https://drive.google.com/uc?export=download&id=1zR4Zof0Vbm4ayk6n_LTosEhnNoeP4aA3)
 
 ## [DOWNLOAD Windows Receiver](https://github.com/Suundumused/Windows-Joystick-Receiver/releases/tag/GravityJoystickReceiverSetup)
 ## **Download and install third-party driver** [DRIVER](https://github.com/Suundumused/Windows-Joystick-Receiver/tree/main/ServerGravityJoystick/Driver)
+
+**The license files in this document refer only to the Receiver for Windows and the Drivers. Does not apply to the mobile client.**
 
 ## Features
 
