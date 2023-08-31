@@ -24,7 +24,7 @@ Some games have the option "steering axis dead zone" like Euro Truck Simulator 2
 - **Types of games:** Designed for car and plane games.
 
 ## Screenshots
-![Screenshot 0](https://drive.google.com/uc?export=download&id=1vYzMl3p9iAb3-MOqpN-G3vJiUjCo19pg) 
+![Screenshot 0](https://drive.google.com/uc?export=download&id=1yVDJnWEtBq4mLmpVGvtlalfLHVfnoC8Z) 
 ![Screenshot 2](https://drive.google.com/uc?export=download&id=1iGodTQTsNZCx_szvJmUA2_6q6e_zfAi3)
 
 *BeautifulUI components in action.*
