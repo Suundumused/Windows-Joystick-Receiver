@@ -6,6 +6,8 @@ This joystick app is based on the Xbox 360 controller, it transforms the acceler
 
 [![](https://drive.google.com/uc?export=download&id=1itkU6b4DT5FAnzztb_5ZTpRZhJp-A5yK)](https://play.google.com/store/apps/details?id=com.caiosilva.gravityjoystick&hl=pt&gl=US)
 
+[Get it on Google Play](https://play.google.com/store/apps/details?id=com.caiosilva.gravityjoystick&hl=pt&gl=US&pli=1)
+
 Some games have the option "steering axis dead zone" like Euro Truck Simulator 2, I recommend greatly reduce it to control 100% of the steering, high sensitivity is recommended.
 
 ## [DOWNLOAD Windows Receiver](https://github.com/Suundumused/Windows-Joystick-Receiver/releases/tag/GravityJoystickReceiverSetup)
