@@ -1,3 +1,4 @@
+import math
 import socket
 import asyncio
 import json
@@ -9,6 +10,7 @@ import psutil
 import argparse
 import platform
 import subprocess
+import time
 
 import pystray
 from PIL import Image
@@ -22,6 +24,12 @@ class Variables:
         self.Sensibility = 2
         self.ServerIP = ""
         self.ServerPort = ""
+        self.start_time = time.time()
+        self.valor3 = 0.0
+        
+        self.alpha = 0.25 #smooth rate 
+        self.filtered_valueX = None
+        self.filtered_valueY = None
         
     def install_drivers(self):
         MB_ICONERROR = 0x10
@@ -55,13 +63,31 @@ class Variables:
         self.StartStop = False
         os._exit(0)
         
-    def ADJSensibility(self,valor):
-        if (valor * self.Sensibility) > 1.0:
+    def XADJSensibility(self,valor):            
+        if Variaveis.filtered_valueX is None:
+            Variaveis.filtered_valueX = valor
+        else:
+            Variaveis.filtered_valueX = (1 - Variaveis.alpha) * Variaveis.filtered_valueX + Variaveis.alpha * valor #low pass filter
+            
+        if (Variaveis.filtered_valueX * (self.Sensibility + Variaveis.alpha)) >= 1.0:
             return 1.0
-        elif (valor * self.Sensibility) < -1.0:
+        elif (Variaveis.filtered_valueX * (self.Sensibility + Variaveis.alpha)) <= -1.0:
             return -1.0
         else:
-            return (valor * self.Sensibility)
+            return (Variaveis.filtered_valueX * (self.Sensibility + Variaveis.alpha))
+            
+    def YADJSensibility(self,valor):            
+        if Variaveis.filtered_valueY is None:
+            Variaveis.filtered_valueY = valor
+        else:
+            Variaveis.filtered_valueY = (1 - Variaveis.alpha) * Variaveis.filtered_valueY + Variaveis.alpha * valor #low pass filter
+        
+        if (Variaveis.filtered_valueY * (self.Sensibility + Variaveis.alpha)) >= 1.0:
+            return 1.0
+        elif (Variaveis.filtered_valueY * (self.Sensibility + Variaveis.alpha)) <= -1.0:
+            return -1.0
+        else:
+            return (Variaveis.filtered_valueY * (self.Sensibility + Variaveis.alpha))
         
     def boolToFloat(self, valor):
         if valor:
@@ -125,7 +151,7 @@ async def handle_client(client_socket, Variaveis):
             gamepad.right_trigger_float(Variaveis.acceleratorCor(received_list[17]*2-1))
             gamepad.left_trigger_float(Variaveis.acceleratorCor(-2*received_list[17]+1))
             
-            gamepad.left_joystick_float(Variaveis.ADJSensibility(received_list[20]),Variaveis.ADJSensibility(received_list[19]))
+            gamepad.left_joystick_float(Variaveis.XADJSensibility(received_list[20]),Variaveis.YADJSensibility(received_list[19]))
             gamepad.right_joystick_float((Variaveis.boolToFloat(received_list[9])-Variaveis.boolToFloat(received_list[8])), (Variaveis.boolToFloat(received_list[10])-Variaveis.boolToFloat(received_list[11])))
             
             if received_list[0]:
