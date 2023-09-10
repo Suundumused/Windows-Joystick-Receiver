@@ -27,9 +27,16 @@ class Variables:
         self.start_time = time.time()
         self.valor3 = 0.0
         
-        self.alpha = 0.25 #smooth rate 
+        self.alpha = 0.125 #smooth rate 
+        
+        self.WheelXValue = 0.0
+        self.WheelYValue = 0.0
+        
         self.filtered_valueX = None
         self.filtered_valueY = None
+        
+        self.FinalXValue = 0.0
+        self.FinalYValue = 0.0
         
     def install_drivers(self):
         MB_ICONERROR = 0x10
@@ -100,6 +107,19 @@ class Variables:
             return 0.0
         else:
             return valor
+        
+async def smoothWheel(Variaveis):
+    while True:
+        start_time = time.time()
+    
+        Variaveis.FinalXValue = Variaveis.XADJSensibility(Variaveis.WheelXValue)
+        Variaveis.FinalYValue = Variaveis.YADJSensibility(Variaveis.WheelYValue)
+            
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        
+        if elapsed_time < 1/250:
+            time.sleep(1/250 - elapsed_time)
 
 async def handle_client(client_socket, Variaveis):
     MB_ICONERROR = 0x10
@@ -141,6 +161,8 @@ async def handle_client(client_socket, Variaveis):
 
     while Variaveis.StartStop:
         try:
+            loop = asyncio.get_event_loop()
+            
             data = await asyncio.to_thread(client_socket.recv, 2048)
             if not data:
                 break
@@ -148,10 +170,13 @@ async def handle_client(client_socket, Variaveis):
             received_data = data.decode()
             received_list = json.loads(received_data)
             
+            Variaveis.WheelXValue = received_list[20]
+            Variaveis.WheelYValue = received_list[19]
+            
             gamepad.right_trigger_float(Variaveis.acceleratorCor(received_list[17]*2-1))
             gamepad.left_trigger_float(Variaveis.acceleratorCor(-2*received_list[17]+1))
             
-            gamepad.left_joystick_float(Variaveis.XADJSensibility(received_list[20]),Variaveis.YADJSensibility(received_list[19]))
+            gamepad.left_joystick_float(Variaveis.FinalXValue, Variaveis.FinalYValue)
             gamepad.right_joystick_float((Variaveis.boolToFloat(received_list[9])-Variaveis.boolToFloat(received_list[8])), (Variaveis.boolToFloat(received_list[10])-Variaveis.boolToFloat(received_list[11])))
             
             if received_list[0]:
@@ -222,7 +247,8 @@ async def handle_client(client_socket, Variaveis):
             gamepad.update()
                         
             response = "0"
-            client_socket.send(response.encode())
+            
+            await loop.sock_sendall(client_socket, response.encode('utf8'))
 
         except Exception as e:
             es = repr(e)
@@ -292,6 +318,8 @@ async def main(ServerAdd, Variaveis):
     except Exception as e:
         ctypes.windll.user32.MessageBoxW(0, repr(e), "Error", MB_ICONERROR | MB_OK)
 
+def smooth_Thread(Variaveis):
+    asyncio.run(smoothWheel(Variaveis))
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -317,5 +345,8 @@ if __name__ == "__main__":
     tray_thread = threading.Thread(target=icon.run)
     # Start the thread
     tray_thread.start()
+    
+    smooth_ThreadA = threading.Thread(target=smooth_Thread, args=(Variaveis, ))
+    smooth_ThreadA.start()
     
     asyncio.run(main("0.0.0.0:3470", Variaveis))
