@@ -324,11 +324,11 @@ class UI:
         self.switch_3.set(Variaveis.data['Smooth_Input'])
         
         self.switch1_var = customtkinter.IntVar(value = Variaveis.data['Start_Hidden'])
-        self.switch_1 = customtkinter.CTkSwitch(master=self.frame4, text="Start Hidden",  onvalue=1, offvalue=0, variable = self.switch1_var, command = lambda: self.SaveAll(Variaveis))
+        self.switch_1 = customtkinter.CTkSwitch(master=self.frame4, text="Start Hidden",  onvalue=1, offvalue=0, variable = self.switch1_var)
         self.switch_1.pack(pady=1, padx=6, fill="x", expand=True)
         
         self.switch2_var = customtkinter.IntVar(value = Variaveis.data['Show_Overlay'])
-        self.switch_2 = customtkinter.CTkSwitch(master=self.frame4, text="Show Overlay ( Beta! may cause Input Lag. )",  onvalue=1, offvalue=0, variable = self.switch2_var, command = lambda: self.SaveAll(Variaveis))
+        self.switch_2 = customtkinter.CTkSwitch(master=self.frame4, text="Show Overlay ( Beta! may cause Input Lag. )",  onvalue=1, offvalue=0, variable = self.switch2_var)
         self.switch_2.pack(pady=1, padx=6, fill="x", expand=True)
         
         self.button = customtkinter.CTkButton(master=self.frame4, border_width=0, corner_radius=8, text="Save", command = lambda: self.SaveAll(Variaveis))
