@@ -481,7 +481,7 @@ async def update_slider_overlay(Variaveis, value):
             Variaveis.accslider.set(value)
             await fovUpdate(Variaveis)
 
-    except Exception as e:
+    except:
         if Variaveis.fov == True:
             await fovUpdate(Variaveis)
 
@@ -543,7 +543,7 @@ async def handle_client(client_socket, Variaveis):
             gamepad.left_joystick_float(Variaveis.FinalXValue, Variaveis.FinalYValue)
             gamepad.right_joystick_float((Variaveis.boolToFloat(received_list[9])-Variaveis.boolToFloat(received_list[8])), (Variaveis.boolToFloat(received_list[10])-Variaveis.boolToFloat(received_list[11])))
             
-            if Variaveis.data['Show_Overlay'] == 1:
+            if Variaveis.data['Show_Overlay'] == 1 and Variaveis.Overlays != None:
                 task = asyncio.create_task(update_slider_overlay(Variaveis, received_list[17]))
             
             if received_list[0]:
