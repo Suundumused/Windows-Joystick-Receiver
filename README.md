@@ -13,7 +13,7 @@ Some games have the option "steering axis dead zone" like Euro Truck Simulator 2
 ## [DOWNLOAD Windows Receiver](https://github.com/Suundumused/Windows-Joystick-Receiver/releases/tag/GravityJoystickReceiverSetup)
 ## **Download and install third-party** [DRIVER](https://github.com/Suundumused/Windows-Joystick-Receiver/tree/main/ServerGravityJoystick/Driver)
 
-## **In games, set the virtual joystick as the steering wheel.
+## **In games, set the virtual joystick as the steering wheel.**
 
 **The license files in this document refer only to the Receiver for Windows and the Drivers. Does not apply to the mobile client.**
 
