@@ -11,7 +11,9 @@ import argparse
 import platform
 import subprocess
 import time
-from queue import Queue
+
+import shutil
+import win32api
 
 import pystray
 from PIL import Image
@@ -22,7 +24,7 @@ import tkinter as tk
 from tkinter import ttk, Frame
 
 class Overlays:
-    def onClose(self, Variaveis):        
+    def onClose(self, Variaveis):
         Variaveis.Overlays = None
         self.root.destroy()
         
@@ -82,6 +84,9 @@ class Overlays:
             pass
 
 class UI:
+    def msgbox(self, txt):
+        win32api.MessageBox(0, f'{txt}', 'Alert')       
+    
     def tkinter_thread2(self, Variaveis):
         root2 = customtkinter.CTk()
         app2 = Overlays(root2, Variaveis)
@@ -122,17 +127,16 @@ class UI:
                 self.NewWindow2(Variaveis)
             
             Variaveis.Sensibility = Variaveis.data['Sensibility'] * 2
-            
-            if Variaveis.data['Smooth_Input'] == 1:
-                Variaveis.alpha = 0.25
-            
-            else:
-                Variaveis.alpha = 0.33
+
+            Variaveis.alpha = 1 - Variaveis.data['Smooth_Input']
                 
             self.data = Variaveis.data
                 
             with open(self.cwd, 'w') as self.outfile:
                 json.dump(self.data, self.outfile)
+                
+            msg = threading.Thread(target = self.msgbox, args=("Some options will require the app to be restarted.", ))
+            msg.start()
                     
         except Exception as e:
             ctypes.windll.user32.MessageBoxW(0, repr(e), "Error", self.MB_ICONERROR | self.MB_OK)
@@ -162,7 +166,7 @@ class UI:
                 pass
             else:
                 self.data={
-                    "Smooth_Input": 1,
+                    "Smooth_Input": 0.875,
                     "Sensibility": 1,
                     "Start_Hidden": 0,
                     "Show_Overlay": 0,
@@ -178,11 +182,7 @@ class UI:
             
             Variaveis.Sensibility = Variaveis.data['Sensibility'] * 2
             
-            if Variaveis.data['Smooth_Input'] == 1:
-                Variaveis.alpha = 0.25
-            
-            else:
-                Variaveis.alpha = 0.33
+            Variaveis.alpha = 1 - Variaveis.data['Smooth_Input']
                 
         except Exception as e:
             ctypes.windll.user32.MessageBoxW(0, repr(e), "Error", self.MB_ICONERROR | self.MB_OK)
@@ -230,6 +230,7 @@ class UI:
     def onClose(self, Variaveis):        
         Variaveis.UI = None
         self.root.destroy()
+        Variaveis.sair()
         
     def __init__(self, root, Variaveis):
         self.openSaveFile(Variaveis)
@@ -251,7 +252,7 @@ class UI:
         
         self.root.protocol("WM_DELETE_WINDOW", lambda: self.onClose(Variaveis))
         
-        self.root.title("Gravity Joystick Receiver V1.2")
+        self.root.title("Gravity Joystick Receiver V1.2.1")
         
         Variaveis.UI = self.root
         
@@ -270,29 +271,17 @@ class UI:
         
         self.frame = customtkinter.CTkFrame(master=self.root)
         self.frame.pack(pady=(20,0), padx=60, fill="x", expand=False)
-               
+        
         self.title = customtkinter.CTkLabel(master = self.frame, text="Gravity Joystick Receiver", font = ("Roboto", 22))
         self.title.pack(pady=12, padx=10)
         
+        self.title2 = customtkinter.CTkLabel(master = self.frame, text = f"Listening set to: {Variaveis.MasterIP}:{Variaveis.data['ServerPort']}", font = ("Roboto", 14))
+        self.title2.pack(pady=12, padx=10)
+        
         self.IP = customtkinter.CTkEntry(master = self.frame, placeholder_text="0.0.0.0", justify="right")
         self.IP.pack(pady=12, padx=(10,1), side = "left", expand=True, fill="x")
-        
-        if Variaveis.data['ServerIP'] == "0.0.0.0":
-            try:
-                s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                s.connect(('10.255.255.255', 1))
-                
-                IP = s.getsockname()[0]
-            except Exception as e:
-                IP = '127.0.0.1'
-                ctypes.windll.user32.MessageBoxW(0, repr(e), "Error", self.MB_ICONERROR | self.MB_OK)
-            finally:
-                server_ip = IP
-                s.close()
-                
-                self.IP.insert(0, server_ip)
-        else:
-            self.IP.insert(0, Variaveis.data['ServerIP'])
+                                
+        self.IP.insert(0, Variaveis.data['ServerIP'])
         
         self.dott = customtkinter.CTkLabel(master = self.frame, text=":", font = ("Roboto", 18))
         self.dott.pack(pady=12, padx=1, side = "left")
@@ -302,11 +291,11 @@ class UI:
         
         self.PORT.insert(0, Variaveis.data['ServerPort'])
         
-        self.frame2 = customtkinter.CTkFrame(master=self.root)
+        '''self.frame2 = customtkinter.CTkFrame(master=self.root)
         self.frame2.pack(pady=0, padx=60, fill="x", expand=False)
         
         self.button = customtkinter.CTkButton(master=self.frame2, border_width=0, corner_radius=8, text="Restart", command = lambda: self.Restart(Variaveis))
-        self.button.pack(pady=12, padx=1)
+        self.button.pack(pady=12, padx=1)'''
         
         self.frame3 = customtkinter.CTkFrame(master=self.root)
         self.frame3.pack(pady=(0,0), padx=60, fill="both", expand=True)
@@ -314,19 +303,25 @@ class UI:
         self.SenseLabel = customtkinter.CTkLabel(master = self.frame3, text="Sensibility: ", font = ("Roboto", 14))
         self.SenseLabel.pack(pady=1, padx=(6,1), side = "left")
         
-        self.slider = customtkinter.CTkSlider(master=self.frame3, border_width=5.5)
+        self.slider = customtkinter.CTkSlider(master=self.frame3, border_width=5.5, from_ = 0.5, to = 1)
         self.slider.pack(pady=1, padx=(1,6), fill="x", expand=True, side = "right")
         self.slider.set(Variaveis.data['Sensibility'])
+        
+        self.frame45 = customtkinter.CTkFrame(master=self.root)
+        self.frame45.pack(pady=(0,0), padx=60, fill="both", expand=True)
         
         self.frame4 = customtkinter.CTkFrame(master=self.root)
         self.frame4.pack(pady=(0,20), padx=60, fill="both", expand=True)
         
         if Variaveis.data['Show_Overlay'] and Variaveis.once == True:
             self.NewWindow2(Variaveis)
+            
+        self.SenseLabel3 = customtkinter.CTkLabel(master = self.frame45, text="Smooth Input: ", font = ("Roboto", 14))
+        self.SenseLabel3.pack(pady=1, padx=(6,1), side = "left")
         
-        self.switch3_var = customtkinter.IntVar(value = Variaveis.data['Smooth_Input'])
-        self.switch_3 = customtkinter.CTkSwitch(master=self.frame4, text="Smooth Input",  onvalue=1, offvalue=0, variable = self.switch3_var, command = lambda: self.SaveAll(Variaveis))
-        self.switch_3.pack(pady=1, padx=6, fill="x", expand=True)
+        self.switch_3 = customtkinter.CTkSlider(master=self.frame45,  border_width=5.5, number_of_steps = 1000, from_ = 0.5, to = 0.975)
+        self.switch_3.pack(pady=1, padx=(1,6), fill="x", expand=True, side = "right")
+        self.switch_3.set(Variaveis.data['Smooth_Input'])
         
         self.switch1_var = customtkinter.IntVar(value = Variaveis.data['Start_Hidden'])
         self.switch_1 = customtkinter.CTkSwitch(master=self.frame4, text="Start Hidden",  onvalue=1, offvalue=0, variable = self.switch1_var, command = lambda: self.SaveAll(Variaveis))
@@ -339,13 +334,11 @@ class UI:
         self.button = customtkinter.CTkButton(master=self.frame4, border_width=0, corner_radius=8, text="Save", command = lambda: self.SaveAll(Variaveis))
         self.button.pack(pady=12, padx=1)
         
-        if (Variaveis.data['ServerIP'] != "0.0.0.0" or Variaveis.data['ServerPort'] != 3470) and Variaveis.once == True:    
-            self.Restart(Variaveis)
-        
         if Variaveis.once == True and Variaveis.data['Start_Hidden'] == 1:            
             Variaveis.once = False
-            self.onClose(Variaveis)
-            
+            Variaveis.UI = None
+            self.root.destroy()
+
         else:
             Variaveis.once = False
     
@@ -367,9 +360,18 @@ class Variables:
         self.accslider = None
         self.fov = False
         
-        self.alpha = 0.25 #smooth rate 
+        self.alpha = 0.125 #smooth rate 
+        
+        self.WheelXValue = 0.0
+        self.WheelYValue = 0.0
+        
         self.filtered_valueX = None
         self.filtered_valueY = None
+        
+        self.FinalXValue = 0.0
+        self.FinalYValue = 0.0
+        
+        self.MasterIP = ""
         
         self.Socket = None
         self.UI = None
@@ -377,11 +379,11 @@ class Variables:
         self.ResCallSave = False
         
         self.data = {
-                    "Smooth_Input": 1,
+                    "Smooth_Input": 0.875,
                     "Sensibility": 1,
                     "Start_Hidden": 0,
                     "Show_Overlay": 0,
-                    "ServerIP": "0.0.0.0",
+                    "ServerIP": "0.0.0.x",
                     "ServerPort": 3470
                 }
         
@@ -411,7 +413,7 @@ class Variables:
                 ctypes.windll.user32.MessageBoxW(0, "Architecture information not available.", "Error", MB_ICONERROR | MB_OK)
                 
         except Exception as e:
-            ctypes.windll.user32.MessageBoxW(0, repr(e), "Error", MB_ICONERROR | MB_OK)
+            ctypes.windll.user32.MessageBoxW(0, str(e), "Error", MB_ICONERROR | MB_OK)
         
     def sair(self):
         self.StartStop = False
@@ -455,8 +457,21 @@ class Variables:
         else:
             return valor
         
+async def smoothWheel(Variaveis):
+    while True:
+        start_time = time.time()
+    
+        Variaveis.FinalXValue = Variaveis.XADJSensibility(Variaveis.WheelXValue)
+        Variaveis.FinalYValue = Variaveis.YADJSensibility(Variaveis.WheelYValue)
+            
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        
+        if elapsed_time < 1/250:
+            time.sleep(1/250 - elapsed_time)
+            
 async def fovUpdate(Variaveis):
-    await asyncio.sleep(0.33)
+    await asyncio.sleep(0.25)
     Variaveis.fov = False
 
 async def update_slider_overlay(Variaveis, value):
@@ -469,7 +484,7 @@ async def update_slider_overlay(Variaveis, value):
     except Exception as e:
         if Variaveis.fov == True:
             await fovUpdate(Variaveis)
-    
+
 async def handle_client(client_socket, Variaveis):
     MB_ICONERROR = 0x10
     MB_OK = 0x0
@@ -511,7 +526,7 @@ async def handle_client(client_socket, Variaveis):
     while Variaveis.StartStop:
         try:
             loop = asyncio.get_event_loop()
-
+            
             data = await asyncio.to_thread(client_socket.recv, 2048)
             if not data:
                 break
@@ -519,14 +534,17 @@ async def handle_client(client_socket, Variaveis):
             received_data = data.decode()
             received_list = json.loads(received_data)
             
-            if Variaveis.data['Show_Overlay'] == 1:
-                task = asyncio.create_task(update_slider_overlay(Variaveis, received_list[17]))
+            Variaveis.WheelXValue = received_list[20]
+            Variaveis.WheelYValue = received_list[19]
             
             gamepad.right_trigger_float(Variaveis.acceleratorCor(received_list[17]*2-1))
             gamepad.left_trigger_float(Variaveis.acceleratorCor(-2*received_list[17]+1))
             
-            gamepad.left_joystick_float(Variaveis.XADJSensibility(received_list[20]),Variaveis.YADJSensibility(received_list[19]))
+            gamepad.left_joystick_float(Variaveis.FinalXValue, Variaveis.FinalYValue)
             gamepad.right_joystick_float((Variaveis.boolToFloat(received_list[9])-Variaveis.boolToFloat(received_list[8])), (Variaveis.boolToFloat(received_list[10])-Variaveis.boolToFloat(received_list[11])))
+            
+            if Variaveis.data['Show_Overlay'] == 1:
+                task = asyncio.create_task(update_slider_overlay(Variaveis, received_list[17]))
             
             if received_list[0]:
                 gamepad.press_button(button=vg.XUSB_BUTTON.XUSB_GAMEPAD_LEFT_THUMB)
@@ -596,9 +614,9 @@ async def handle_client(client_socket, Variaveis):
             gamepad.update()
                         
             response = "0"
-                        
+            
             await loop.sock_sendall(client_socket, response.encode('utf8'))
-                        
+
         except Exception as e:
             es = repr(e)
             ctypes.windll.user32.MessageBoxW(0, es, "Error", MB_ICONERROR | MB_OK)
@@ -606,32 +624,36 @@ async def handle_client(client_socket, Variaveis):
             
     os.system('cls')
     print(f"Listening on {Variaveis.ServerIP}:{int(Variaveis.ServerPort)}")
+    print(f"\nDisconnected. Stopped!")
     client_socket.close()
     gamepad.reset()
     #print(f"Connection closed for {client_socket.getpeername()}")
 
 async def main(ServerAdd, Variaveis):
-    if Variaveis.StartStop == False:
-        Variaveis.StartStop = True
-
     MB_ICONERROR = 0x10
     MB_OK = 0x0
+    
+    while Variaveis.data['ServerIP'] == "0.0.0.x":
+        pass
 
     try:
-        server_ip, server_port = ServerAdd.split(":")
+        #server_ip, server_port = ServerAdd.split(":")
+        server_ip = Variaveis.data['ServerIP']
+        server_port = Variaveis.data['ServerPort']
+        
     # Create a socket object
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                
-        parser = argparse.ArgumentParser(  #descrição do app
+        
+        '''parser = argparse.ArgumentParser(  #descrição do app
             description='Joystick Gravity Wireless Receiver',
             epilog="Started!")
     
         parser.add_argument("-ip","--host", help="Set/Get Local IPV4, default = '0.0.0.0'", type=str, default="0.0.0.0")#criar argumento alterar ip
         parser.add_argument("-p","--port", help="Set Port Forwarding, default = 8080", type=int, default=3470) #alterar porta
     
-        args = parser.parse_args()
+        args = parser.parse_args()'''
         
-        if server_ip == "0.0.0.0" and args.host == "0.0.0.0":
+        if server_ip == "0.0.0.0":
             try:
                 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
                 s.connect(('10.255.255.255', 1))
@@ -639,82 +661,57 @@ async def main(ServerAdd, Variaveis):
                 IP = s.getsockname()[0]
             except Exception as e:
                 IP = '127.0.0.1'
-                ctypes.windll.user32.MessageBoxW(0, repr(e), "Error", MB_ICONERROR | MB_OK)
+                ctypes.windll.user32.MessageBoxW(0, str(e), "Error", MB_ICONERROR | MB_OK)
             finally:
                 server_ip = IP
+                Variaveis.MasterIP = server_ip
+                
                 s.close()
                 
-        else:
+        '''else:
             if args.host != "0.0.0.0":
                 server_ip = args.host
                 
         if args.port != 3470:
-            server_port = str(args.port)
+            server_port = str(args.port)'''
 
     # Bind the socket to the server address
-        if Variaveis.ResCallSave == False:
-            server_socket.bind((server_ip, int(server_port)))
-        
-        else:
-            if Variaveis.ServerIP == "0.0.0.0":
-                try:
-                    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                    s.connect(('10.255.255.255', 1))
-                    
-                    IP = s.getsockname()[0]
-                except Exception as e:
-                    IP = '127.0.0.1'
-                    ctypes.windll.user32.MessageBoxW(0, repr(e), "Error", MB_ICONERROR | MB_OK)
-                finally:
-                    server_ip = IP
-                    Variaveis.MasterIP = server_ip
-                    
-                    s.close()
-                
-                    server_socket.bind((server_ip, int(Variaveis.ServerPort)))
-                    
-            else:
-                server_ip = Variaveis.ServerIP
-                
-                server_socket.bind((Variaveis.ServerIP, int(Variaveis.ServerPort)))
+        server_socket.bind((server_ip, int(server_port)))
 
     # Listen for incoming connections
         server_socket.listen(1)
         
-        if Variaveis.ResCallSave == False:
-            Variaveis.ServerIP = server_ip
-            Variaveis.ServerPort = server_port
-            
-        Variaveis.Socket = server_socket
+        Variaveis.ServerIP = server_ip
+        Variaveis.ServerPort = server_port
         
-        os.system('cls')
         print(f"Listening on {server_ip}:{int(server_port)}")
 
         while Variaveis.StartStop:
             client_socket, _ = await asyncio.to_thread(server_socket.accept)
             asyncio.create_task(handle_client(client_socket, Variaveis))
             
-        server_socket.close()
-                
-        await (main("0.0.0.0:3470", Variaveis))
-                                
-    except Exception as e:        
+    except Exception as e:
         ctypes.windll.user32.MessageBoxW(0, repr(e), "Error", MB_ICONERROR | MB_OK)
-        
         
 def tkinter_thread(Variaveis):
     root = customtkinter.CTk()
     app = UI(root, Variaveis)
-        
+    
 def NewWindow(Variaveis):
     if Variaveis.UI == None:
         tkinter_thread_thread = threading.Thread(target=tkinter_thread, args=(Variaveis, ))
         tkinter_thread_thread.start()
-    
+
+def smooth_Thread(Variaveis):
+    asyncio.run(smoothWheel(Variaveis))
+
 if __name__ == "__main__":
     myappid = 'Suundumused.GravityJoystickReceiver.GravityJoystickReceiver.1' # arbitrary string
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
-         
+    
+    '''root = tk.Tk()
+    root.withdraw()'''
+    
     config_name = 'icon'
         
     if getattr(sys, 'frozen', False):  #-----ATUALIZADO-----
@@ -744,5 +741,8 @@ if __name__ == "__main__":
     tray_thread = threading.Thread(target=icon.run)
     # Start the thread
     tray_thread.start()
+    
+    smooth_ThreadA = threading.Thread(target=smooth_Thread, args=(Variaveis, ))
+    smooth_ThreadA.start()
     
     asyncio.run(main("0.0.0.0:3470", Variaveis))
